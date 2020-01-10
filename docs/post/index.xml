@@ -1,25 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Posts on Nate Byers</title>
-    <link>/blog/post/</link>
-    <description>Recent content in Posts on Nate Byers</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sun, 05 Jan 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/blog/post/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Using Pipes in R</title>
-      <link>/blog/2020/01/05/using-pipes-in-r/</link>
-      <pubDate>Sun, 05 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/2020/01/05/using-pipes-in-r/</guid>
-      <description>If you’ve been introduced to R as a simple way to do data analysis you might havecome across this strange operator, %&amp;gt;%. It’s called a pipe because it passesdata from one function to another. Here’s an example of subsetting andtransforming data using the pipe from the magrittr package:
-library(magrittr)dat &amp;lt;- airquality %&amp;gt;%subset(Ozone &amp;gt; 40) %&amp;gt;%transform(Celsius = (Temp - 32) * (5/9)) %&amp;gt;%head()dat## Ozone Solar.</description>
-    </item>
-    
-  </channel>
-</rss>
