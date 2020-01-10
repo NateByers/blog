@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Web-Scraping on Nate Byers</title>
+    <link>/categories/web-scraping/</link>
+    <description>Recent content in Web-Scraping on Nate Byers</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 08 Jan 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/web-scraping/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Web Scraping With rvest</title>
+      <link>/2020/01/08/web-scraping-with-rvest/</link>
+      <pubDate>Wed, 08 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/01/08/web-scraping-with-rvest/</guid>
+      <description>rvest is an R package that makes it easy to scrape text from web pages.
+This code is from the GitHub page for the package. It showshow to scrape the rating, cast, and poster for The Lego Movie from IMBD.
+library(rvest)lego_movie &amp;lt;- read_html(&amp;quot;http://www.imdb.com/title/tt1490017/&amp;quot;)rating &amp;lt;- lego_movie %&amp;gt;% html_nodes(&amp;quot;strong span&amp;quot;) %&amp;gt;%html_text() %&amp;gt;%as.numeric()rating## [1] 7.8cast &amp;lt;- lego_movie %&amp;gt;%html_nodes(&amp;quot;#titleCast .itemprop span&amp;quot;) %&amp;gt;%html_text()cast## character(0)#Scrape the website for the url of the movie posterposter &amp;lt;- lego_movie %&amp;gt;%html_nodes(&amp;quot;#img_primary img&amp;quot;) %&amp;gt;%html_attr(&amp;quot;src&amp;quot;)posterCSS selectorThe trick to all of this is the text you put in the html_nodes function.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,75 @@
+---
+title: Using Pipes in R
+author: Nate Byers
+date: '2020-01-05'
+slug: using-pipes-in-r
+categories:
+  - R
+tags: []
+---
+
+If you've been introduced to R as a simple way to do data analysis you might have
+come across this strange operator, `%>%`. It's called a pipe because it passes
+data from one function to another. Here's an example of subsetting and 
+transforming data using the pipe from the magrittr package:
+
+```{r}
+library(magrittr)
+dat <- airquality %>%
+  subset(Ozone > 40) %>%
+  transform(Celsius = (Temp - 32) * (5/9)) %>%
+  head()
+dat
+```
+
+The first line can be read, "I'm going to make a new object called `dat` and it's
+going to start with the `airquality` data frame". The `%>%` at the end of the 
+first line pipes the data frame to the next line, which is the `subset` function.
+If you look at the 
+[documentation](http://stat.ethz.ch/R-manual/R-devel/library/base/html/subset.html) 
+for `subset`, the first argument is `x`, an "object to be subsetted". The `%>%`
+takes the data frame immediately before it and places it in the first argument
+of the function immediately following it. So `airquality` becomes the object
+to be subsetted in the `subset` function.
+
+Since the pipe has already assigned a data frame to the first argument of `subset`,
+the next argument in the function is a logical expression that is used to select
+rows to keep (i.e., subset the data frame). I want to keep all rows where
+the ozone values are above 40. 
+
+Once the concept sinks in, you can easily read the rest of the code. The output
+of `subset` is piped to the first argument of `transform`. The argument that I 
+have inside of `transform` is assigned to the second argument, and the output
+of `transform` is passed on to the first argument of `head`.
+
+# dplyr
+
+So why use the pipe? For one thing, you avoid reassigning the data frame every
+time you change it. Here's the subset/transformation from above without the 
+pipes.
+
+```{r}
+dat <- subset(airquality, Ozone > 40) 
+dat <- transform(dat, Celsius = (Temp - 32) * (5/9)) 
+dat <- head(dat)
+dat
+```
+
+You not only avoid reassigning the data frame every time, but you don't have to
+type the data frame object as the first argument in each function.
+
+Admittedly, the amount of typing being saved is minimal. The other main reason
+to use pipes is the benefit of chaining dplyr functions together. Those functions
+were written with the pipe in mind. 
+
+```{r, message=FALSE, warning=FALSE}
+library(dplyr)
+dat <- airquality %>%
+  filter(Ozone > 40) %>%
+  mutate(Celsius = (Temp - 32) * (5/9)) %>%
+  head()
+dat
+```
+
+Once you get used to using the pipe, you gain the ability to quickly read a 
+chain of dplyr functions. And this can speed up your production significantly.
