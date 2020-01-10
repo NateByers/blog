@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.62.2" />
+
+
+<title>Web Scraping With rvest - Nate Byers</title>
+<meta property="og:title" content="Web Scraping With rvest - Nate Byers">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/NateByers">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">3 min read</span>
+    
+
+    <h1 class="article-title">Web Scraping With rvest</h1>
+
+    
+    <span class="article-date">2020-01-08</span>
+    
+
+    <div class="article-content">
+      
+
+
+<p><code>rvest</code> is an R package that makes it easy to scrape text from web pages.</p>
+<p>This code is from the <a href="https://github.com/hadley/rvest">GitHub page</a> for the package. It shows
+how to scrape the rating, cast, and poster for The Lego Movie from IMBD.</p>
+<pre class="r"><code>library(rvest)
+lego_movie &lt;- read_html(&quot;http://www.imdb.com/title/tt1490017/&quot;)
+rating &lt;- lego_movie %&gt;% 
+  html_nodes(&quot;strong span&quot;) %&gt;%
+  html_text() %&gt;%
+  as.numeric()
+rating</code></pre>
+<pre><code>## [1] 7.8</code></pre>
+<pre class="r"><code>cast &lt;- lego_movie %&gt;%
+  html_nodes(&quot;#titleCast .itemprop span&quot;) %&gt;%
+  html_text()
+cast</code></pre>
+<pre><code>## character(0)</code></pre>
+<pre class="r"><code>#Scrape the website for the url of the movie poster
+poster &lt;- lego_movie %&gt;%
+  html_nodes(&quot;#img_primary img&quot;) %&gt;%
+  html_attr(&quot;src&quot;)
+poster</code></pre>
+<p><img src="http://ia.media-imdb.com/images/M/MV5BMTg4MDk1ODExN15BMl5BanBnXkFtZTgwNzIyNjg3MDE@._V1_SX214_AL_.jpg" /></p>
+<div id="css-selector" class="section level1">
+<h1>CSS selector</h1>
+<p>The trick to all of this is the text you put in the <code>html_nodes</code> function. For example, this bit of code uses the text “#titleStoryLine p” to grab the storyline on the IMBD page.</p>
+<pre class="r"><code>storyline &lt;- lego_movie %&gt;%
+  html_nodes(&quot;#titleStoryLine p&quot;) %&gt;%
+  html_text()
+cat(storyline)</code></pre>
+<pre><code>## 
+##                     The LEGO Movie is a 3D animated film which follows lead character, Emmet a completely ordinary LEGO mini-figure who is identified as the most &quot;extraordinary person&quot; and the key to saving the Lego universe. Emmet and his friends go on an epic journey to stop the evil tyrant, Lord Business.
+##                 Written by
+## DeAlan Wilson www.ComedyE.com</code></pre>
+<p>The text “#titleStoryLine p” is a <a href="https://www.w3schools.com/cssref/css_selectors.asp">CSS selector</a>
+that identifies the part of the page that you want to scrape. Here’s a fun tutorial on how to use
+selectors to grab elements on a page: <a href="http://flukeout.github.io/" class="uri">http://flukeout.github.io/</a>.</p>
+<p>So the text “#titleStoryLine p” indicates that we selected the “p” element after the element with the id “titleStoryLine”.</p>
+</div>
+<div id="selectorgadget" class="section level1">
+<h1>SelectorGadget</h1>
+<p>But how do you know what CSS selector you should use to grab what you want on a page? Well I could just look at the text in the <code>lego_movie</code> object.</p>
+<pre class="r"><code>lego_movie</code></pre>
+<pre><code>## {html_document}
+## &lt;html xmlns:og=&quot;http://ogp.me/ns#&quot; xmlns:fb=&quot;http://www.facebook.com/2008/fbml&quot;&gt;
+## [1] &lt;head&gt;\n&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8 ...
+## [2] &lt;body id=&quot;styleguide-v2&quot; class=&quot;fixed&quot;&gt;\n            &lt;img height=&quot;1&quot; widt ...</code></pre>
+<p>Or I could use <a href="http://selectorgadget.com/" class="uri">http://selectorgadget.com/</a>. It’s a tool for using your cursor to find the
+selector you need on a webpage. To use it, drag <a href="javascript:(function()%7Bvar%20s=document.createElement(&#39;div&#39;);s.innerHTML=&#39;Loading...&#39;;s.style.color=&#39;black&#39;;s.style.padding=&#39;20px&#39;;s.style.position=&#39;fixed&#39;;s.style.zIndex=&#39;9999&#39;;s.style.fontSize=&#39;3.0em&#39;;s.style.border=&#39;2px%20solid%20black&#39;;s.style.right=&#39;40px&#39;;s.style.top=&#39;40px&#39;;s.setAttribute(&#39;class&#39;,&#39;selector_gadget_loading&#39;);s.style.background=&#39;white&#39;;document.body.appendChild(s);s=document.createElement(&#39;script&#39;);s.setAttribute(&#39;type&#39;,&#39;text/javascript&#39;);s.setAttribute(&#39;src&#39;,&#39;https://dv0akt2986vzh.cloudfront.net/unstable/lib/selectorgadget.js&#39;);document.body.appendChild(s);%7D)();">this link</a>
+to your bookmark bar. Then go to IMDB, or whatever page you want to scrape, and click the
+SelectorGadget bookmark. Hover over the element you want to select and click.</p>
+<p>In the image below, I’ve hovered over the Storyline paragraph and clicked.
+The paragraph is green but you can see that another part of the page is
+highlighted in yellow.</p>
+<p><img src="https://github.com/NateByers/blog/raw/master/static/img/rvest/selector1.PNG" /></p>
+<p>This means that if I use the CSS selector in the box at the bottom of the
+image (“p”), I will get the Storyline and all of the other text that is
+highlighted in yellow. To narrow my selection to just the Storyline, I
+click on the yellow text and exclude it from my selection.</p>
+<p><img src="https://github.com/NateByers/blog/raw/master/static/img/rvest/selector2.PNG" /></p>
+<p>The yellow highlight turns to red, and you can see the CSS selector
+“#titleStoryLine p” in the box at the bottom of the image.</p>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+
