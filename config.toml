@@ -1,4 +1,4 @@
-baseurl = "https://natebyers.github.io/blog/"
+baseurl = "https://natebyersblog.netlify.com/"
 languageCode = "en-us"
 title = "Nate Byers"
 theme = "hugo-lithium"
