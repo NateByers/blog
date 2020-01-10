@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.62.2" />
+
+
+<title>Using Pipes in R - Nate Byers</title>
+<meta property="og:title" content="Using Pipes in R - Nate Byers">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="https://github.com/NateByers">GitHub</a></li>
+    
+    <li><a href="https://www.linkedin.com/in/naterbyers/">LinkedIn</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">3 min read</span>
+    
+
+    <h1 class="article-title">Using Pipes in R</h1>
+
+    
+    <span class="article-date">2020-01-05</span>
+    
+
+    <div class="article-content">
+      
+
+
+<p>If you’ve been introduced to R as a simple way to do data analysis you might have
+come across this strange operator, <code>%&gt;%</code>. It’s called a pipe because it passes
+data from one function to another. Here’s an example of subsetting and
+transforming data using the pipe from the magrittr package:</p>
+<pre class="r"><code>library(magrittr)
+dat &lt;- airquality %&gt;%
+  subset(Ozone &gt; 40) %&gt;%
+  transform(Celsius = (Temp - 32) * (5/9)) %&gt;%
+  head()
+dat</code></pre>
+<pre><code>##    Ozone Solar.R Wind Temp Month Day  Celsius
+## 1     41     190  7.4   67     5   1 19.44444
+## 29    45     252 14.9   81     5  29 27.22222
+## 30   115     223  5.7   79     5  30 26.11111
+## 40    71     291 13.8   90     6   9 32.22222
+## 62   135     269  4.1   84     7   1 28.88889
+## 63    49     248  9.2   85     7   2 29.44444</code></pre>
+<p>The first line can be read, “I’m going to make a new object called <code>dat</code> and it’s
+going to start with the <code>airquality</code> data frame”. The <code>%&gt;%</code> at the end of the
+first line pipes the data frame to the next line, which is the <code>subset</code> function.
+If you look at the
+<a href="http://stat.ethz.ch/R-manual/R-devel/library/base/html/subset.html">documentation</a>
+for <code>subset</code>, the first argument is <code>x</code>, an “object to be subsetted”. The <code>%&gt;%</code>
+takes the data frame immediately before it and places it in the first argument
+of the function immediately following it. So <code>airquality</code> becomes the object
+to be subsetted in the <code>subset</code> function.</p>
+<p>Since the pipe has already assigned a data frame to the first argument of <code>subset</code>,
+the next argument in the function is a logical expression that is used to select
+rows to keep (i.e., subset the data frame). I want to keep all rows where
+the ozone values are above 40.</p>
+<p>Once the concept sinks in, you can easily read the rest of the code. The output
+of <code>subset</code> is piped to the first argument of <code>transform</code>. The argument that I
+have inside of <code>transform</code> is assigned to the second argument, and the output
+of <code>transform</code> is passed on to the first argument of <code>head</code>.</p>
+<div id="dplyr" class="section level1">
+<h1>dplyr</h1>
+<p>So why use the pipe? For one thing, you avoid reassigning the data frame every
+time you change it. Here’s the subset/transformation from above without the
+pipes.</p>
+<pre class="r"><code>dat &lt;- subset(airquality, Ozone &gt; 40) 
+dat &lt;- transform(dat, Celsius = (Temp - 32) * (5/9)) 
+dat &lt;- head(dat)
+dat</code></pre>
+<pre><code>##    Ozone Solar.R Wind Temp Month Day  Celsius
+## 1     41     190  7.4   67     5   1 19.44444
+## 29    45     252 14.9   81     5  29 27.22222
+## 30   115     223  5.7   79     5  30 26.11111
+## 40    71     291 13.8   90     6   9 32.22222
+## 62   135     269  4.1   84     7   1 28.88889
+## 63    49     248  9.2   85     7   2 29.44444</code></pre>
+<p>You not only avoid reassigning the data frame every time, but you don’t have to
+type the data frame object as the first argument in each function.</p>
+<p>Admittedly, the amount of typing being saved is minimal. The other main reason
+to use pipes is the benefit of chaining dplyr functions together. Those functions
+were written with the pipe in mind.</p>
+<pre class="r"><code>library(dplyr)
+dat &lt;- airquality %&gt;%
+  filter(Ozone &gt; 40) %&gt;%
+  mutate(Celsius = (Temp - 32) * (5/9)) %&gt;%
+  head()
+dat</code></pre>
+<pre><code>##   Ozone Solar.R Wind Temp Month Day  Celsius
+## 1    41     190  7.4   67     5   1 19.44444
+## 2    45     252 14.9   81     5  29 27.22222
+## 3   115     223  5.7   79     5  30 26.11111
+## 4    71     291 13.8   90     6   9 32.22222
+## 5   135     269  4.1   84     7   1 28.88889
+## 6    49     248  9.2   85     7   2 29.44444</code></pre>
+<p>Once you get used to using the pipe, you gain the ability to quickly read a
+chain of dplyr functions. And this can speed up your production significantly.</p>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+
