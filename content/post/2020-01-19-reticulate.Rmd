@@ -1,0 +1,61 @@
+---
+title: Reticulate
+author: Nate Byers
+date: '2020-01-19'
+slug: reticulate
+categories:
+  - R
+  - Python
+tags: 
+  - Reticulate
+  - RStudio
+---
+
+I'm an R user first and foremost, but I've wanted to learn Python for years now. 
+While I've worked through many introductory materials, there's no way to really
+learn a programming language until you use it on a
+regular basis. The main reason I don't use Python is that I already know how to
+do everything I need to do in R. But it occurred to me that a good way to force 
+myself to learn Python is to write posts on how to do every task in Python that
+I would normally do in R. That way I'll be able to reference this blog if I want
+to use Python for any task I've already figured out in R.
+
+
+Another reason I haven't used Python so much is that I'm not a programmer by 
+training. R is the first programming language I learned, and 
+(RStudio)[RStudio.com] makes it so easy to develop software for data analysis.
+Using Python is a very frustrating task for someone like me. But RStudio has 
+made it easier and easier to use Python inside of an R session, in an RMarkdown 
+document, and a as a stand-alone text document.
+
+For example, I can use Python to read in the air quality data, and print readings
+in July where the temperature is above 90 degrees.
+
+```{python, eval = FALSE}
+import pandas
+
+air = pandas.read_csv("airquality.csv")
+air = air[(air['Month'] == 7) & (air['Temp'] > 90)]
+print(air)
+```
+
+```{python, echo = FALSE}
+import pandas
+
+air = pandas.read_csv("data/airquality.csv")
+air = air[(air['Month'] == 7) & (air['Temp'] > 90)]
+print(air)
+```
+
+This data can be used in an R session. The air Python DataFrame is passed on to
+R inside an object named `py`
+
+```{r}
+library(reticulate)
+
+head(py$air)
+```
+
+
+My plan is to start with how to read data into Python and cover data manipulation,
+graphics, statistics, and machine learning.

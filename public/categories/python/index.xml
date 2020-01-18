@@ -6,19 +6,18 @@
     <description>Recent content in Python on Nate Byers</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/python/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Filtering in R and Python</title>
-      <link>/2020/01/10/filtering-in-r-and-python/</link>
-      <pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate>
+      <title>Reticulate</title>
+      <link>/2020/01/19/reticulate/</link>
+      <pubDate>Sun, 19 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/2020/01/10/filtering-in-r-and-python/</guid>
-      <description>This is how you filter in R, using dplyr:
-library(dplyr)mtcars %&amp;gt;%filter(carb == 4)## mpg cyl disp hp drat wt qsec vs am gear carb## 1 21.0 6 160.0 110 3.90 2.620 16.46 0 1 4 4## 2 21.0 6 160.0 110 3.90 2.875 17.02 0 1 4 4## 3 14.3 8 360.0 245 3.21 3.570 15.84 0 0 3 4## 4 19.2 6 167.</description>
+      <guid>/2020/01/19/reticulate/</guid>
+      <description>I’m an R user first and foremost, but I’ve wanted to learn Python for years now.While I’ve worked through many introductory materials, there’s no way to reallylearn a programming language until you use it on aregular basis. The main reason I don’t use Python is that I already know how todo everything I need to do in R. But it occurred to me that a good way to forcemyself to learn Python is to write posts on how to do every task in Python thatI would normally do in R.</description>
     </item>
     
   </channel>
