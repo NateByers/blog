@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>Test</title>
+      <link>/2020/01/18/test/</link>
+      <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/01/18/test/</guid>
+      <description>Test post</description>
+    </item>
+    
+    <item>
       <title>Using Pipes in R</title>
       <link>/2020/01/05/using-pipes-in-r/</link>
       <pubDate>Sun, 05 Jan 2020 00:00:00 +0000</pubDate>

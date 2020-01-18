@@ -1,0 +1,14 @@
+---
+title: Test
+author: ''
+date: '2020-01-18'
+slug: test
+categories:
+  - Python
+  - R
+tags:
+  - Reticulate
+  - RStudio
+---
+
+Test post

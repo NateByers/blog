@@ -20,5 +20,14 @@
       <description>I’m an R user first and foremost, but I’ve wanted to learn Python for years now.While I’ve worked through many introductory materials, there’s no way to reallylearn a programming language until you use it on aregular basis. The main reason I don’t use Python is that I already know how todo everything I need to do in R. But it occurred to me that a good way to forcemyself to learn Python is to write posts on how to do every task in Python thatI would normally do in R.</description>
     </item>
     
+    <item>
+      <title>Test</title>
+      <link>/2020/01/18/test/</link>
+      <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/01/18/test/</guid>
+      <description>Test post</description>
+    </item>
+    
   </channel>
 </rss>
