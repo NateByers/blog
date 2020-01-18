@@ -6,26 +6,17 @@
     <description>Recent content in Posts on Nate Byers</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Reticulate</title>
-      <link>/2020/01/19/reticulate/</link>
-      <pubDate>Sun, 19 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/2020/01/19/reticulate/</guid>
-      <description>I’m an R user first and foremost, but I’ve wanted to learn Python for years now.While I’ve worked through many introductory materials, there’s no way to reallylearn a programming language until you use it on aregular basis. The main reason I don’t use Python is that I already know how todo everything I need to do in R. But it occurred to me that a good way to forcemyself to learn Python is to write posts on how to do every task in Python thatI would normally do in R.</description>
-    </item>
-    
-    <item>
-      <title>Test</title>
-      <link>/2020/01/18/test/</link>
+      <link>/2020/01/18/reticulate/</link>
       <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/2020/01/18/test/</guid>
+      <guid>/2020/01/18/reticulate/</guid>
       <description>I’m an R user first and foremost, but I’ve wanted to learn Python for years now.While I’ve worked through many introductory materials, there’s no way to reallylearn a programming language until you use it on aregular basis. The main reason I don’t use Python is that I already know how todo everything I need to do in R. But it occurred to me that a good way to forcemyself to learn Python is to write posts on how to do every task in Python thatI would normally do in R.</description>
     </item>
     

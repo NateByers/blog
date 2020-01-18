@@ -1,11 +1,11 @@
 ---
-title: Test
+title: Reticulate
 author: ''
 date: '2020-01-18'
-slug: test
+slug: reticulate
 categories:
-  - Python
   - R
+  - Python
 tags:
   - Reticulate
   - RStudio
